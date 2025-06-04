@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>عرض النتائج</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to the same CSS file -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HXQKBS4WPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HXQKBS4WPN');
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>نتائج الطالب</h1>
+    <div id="results" class="results-container"></div>
+  </div>
+  <script>
+    // Retrieve student data from localStorage
+    const studentData = JSON.parse(localStorage.getItem('studentData'));
+    if (studentData) {
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = `
+        <div class="student-info">
+          <p><strong>اسم الطالبة:</strong> ${studentData['اسم التلميذ']}</p>
+          <p><strong>االمعهد:</strong> ${studentData['المعهد']}</p>
+          <p><strong>المرحلة:</strong> ${studentData['المرحلة']}</p>
+          <p><strong>الصف:</strong> ${studentData['الصف']}</p>
+        </div>
+        ${studentData['النتيجة'] === 'ن' ? `
+        <h2>الدرجات:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>المادة</th>
+              <th>الدرجة</th>
+              <th>المجموع</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>مجموع القرآن</td><td>${studentData['مجموع القرآن(ع)']}</td><td>60</td></tr>
+            <tr><td>الفقه</td><td>${studentData['الفقه(ع)']}</td><td>50</td></tr>
+            <tr><td>مجموع أصول الدين</td><td>${studentData['مجموع أصول الدين(ع)']}</td><td>100</td></tr>
+            <tr><td>مجموع اللغة العربية</td><td>${studentData['مجموع اللغة العربية(ع)']}</td><td>100</td></tr>
+            <tr><td>اللغة الإنجليزية</td><td>${studentData['اللغة الاجنبية(ع)']}</td><td>40</td></tr>
+            <tr><td>الدراسات الاجتماعية</td><td>${studentData['الدراسات الإجتماعية(ع)']}</td><td>40</td></tr>
+            <tr><td>مجموع الرياضيات</td><td>${studentData['مجموع الرياضيات(ع)']}</td><td>60</td></tr>
+            <tr><td>العلوم</td><td>${studentData['العلوم العامة(ع)']}</td><td>40</td></tr>
+            <tr><td>التربية الفنية</td><td>${studentData['التربية الفنية(ع)']}</td><td>20</td></tr>
+            <tr><td>الحاسب الآلي</td><td>${studentData['مجموع الكمبيوتر(ع)']}</td><td>40</td></tr>
+          </tbody>
+        </table>
+        <div class="total-result">
+          <p><strong>النتيجة النهائية:</strong> ناجحة</p>
+        </div>
+        ` : `
+        <div class="total-result error-message">
+          <p>يرجي مراجعة النتيجة في المعهد</p>
+        </div>
+        `}
+      `;
+    } else {
+      alert('لا توجد بيانات لعرضها.');
+      window.location.href = 'index.html'; // Redirect back to the main page
+    }
+  </script>
+</body>
+</html>

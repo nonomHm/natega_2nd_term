@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نتائج الطالب المرحلة الثانوية</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HXQKBS4WPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-HXQKBS4WPN');
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>نتائج الطالب المرحلة الثانوية</h1>
+    <div id="results" class="results-container"></div>
+    <div class="back-button">
+      <a href="index.html">العودة إلى الصفحة الرئيسية</a>
+    </div>
+  </div>
+
+  <script>
+    // Retrieve student data from localStorage
+    const studentData = JSON.parse(localStorage.getItem('studentData'));
+
+    if (studentData) {
+      const resultsDiv = document.getElementById('results');
+      if (studentData['result'] === 'ن') {
+        // Render the results table if the result is 'ن'
+        resultsDiv.innerHTML = `
+          <div class="student-info">
+            <p><strong>اسم الطالبة:</strong> ${studentData['اسم التلميذ']}</p>
+            <p><strong>معهد فتيات طلخا الثانوي</strong></p>
+            <p><strong>الصف:</strong> ${studentData['الصف']}</p>
+            <p><strong>القسم:</strong> ${studentData['القسم']}</p>
+          </div>
+          <h2>الدرجات:</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>المادة</th>
+                <th>الدرجة</th>
+                <th>النهاية العظمي</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${generateSubjectRows(studentData)}
+            </tbody>
+          </table>
+          <div class="total-result">
+            <p><strong>النتيجة النهائية:</strong> ناجحه</p>
+          </div>
+        `;
+      } else {
+        // Show an error message if the result is not 'ن'
+        resultsDiv.innerHTML = `
+          <div class="total-result error-message">
+            <p>يرجي مراجعة النتيجة في المعهد</p>
+          </div>
+        `;
+      }
+    } else {
+      alert('لا توجد بيانات لعرضها.');
+      window.location.href = 'index.html'; // Redirect back to the main page
+    }
+
+    // Function to generate subject rows dynamically
+    function generateSubjectRows(studentData) {
+      const isFirstGrade = studentData['الصف'] === 'الأول'; // Check if the student is in the first grade
+
+      const subjects = {
+        "feqh": { name: "الفقه", max: 40 },
+        "tafseer": { name: "التفسير", max: 40 },
+        "hadeth": { name: "الحديث", max: 40 },
+        "quraan_total": { name: "مجموع القرآن", max: 40 },
+        "tawheed": { name: "التوحيد", max: 40 },
+        "manteq": { name: "المنطق", max: 40 },
+        "nahow": { name: "النحو", max: 40 },
+        "sarf": { name: "الصرف", max: 40 },
+        "balagha": { name: "البلاغة", max: 40 },
+        "insha": { name: "الإنشاء", max: 40 },
+        "nosos": { name: "الأدب والنصوص", max: 40 },
+        "english": { name: "اللغة الإنجليزية", max: 40 },
+        "frensh": { name: "اللغة الفرنسية", max: 40 },
+        "history": { name: "التاريخ", max: 40 },
+        "geographic": { name: "الجغرافيا", max: 40 },
+        "arts": { name: "التربية الفنية", max: 20 },
+        "hadeth_r": { name: "الحديث (شفوي)", max: 20 },
+        "thaqafa": { name: "الثقافة الاسلامية", max: 20 },
+        "sicology": { name: "علم النفس", max: 40 },
+        "arood": { name: "العروض", max: 20 },
+        "phylosofy": { name: "الفلسفة", max: 40 },
+        "math_total": { name: "الرياضيات (الإجمالي)", max: isFirstGrade ? 40 : 60 }, // Adjust based on grade
+        "physics": { name: "العلوم المتكاملة / الفيزياء", max: isFirstGrade ? 120 : 40 }, // Adjust based on grade
+        "chemistry": { name: "الكيمياء", max: 40 },
+        "biology": { name: "الأحياء", max: 40 },
+      };
+
+      let rows = '';
+      for (const [key, subject] of Object.entries(subjects)) {
+        const grade = studentData[key];
+        if (grade !== null && grade !== undefined && grade !== '') {
+          rows += `
+            <tr>
+              <td>${subject.name}</td>
+              <td>${grade}</td>
+              <td>${subject.max}</td>
+            </tr>
+          `;
+        }
+      }
+      return rows;
+    }
+  </script>
+</body>
+</html>

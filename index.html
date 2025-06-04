@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نتائج الطلاب</title>
+  <link rel="stylesheet" href="styles.css?v=1.1"> <!-- Link to the CSS file -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-HXQKBS4WPN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-HXQKBS4WPN');
+</script>
+</head>
+<body>
+  <div class="container">
+    <h1>معهد فتيات طلخا الاعدادي الثانوي</h1>
+    <h1>نتائج الطلاب</h1>
+    <form id="studentForm" class="form">
+      <label for="level">المرحلة:</label>
+      <select id="level" class="dropdown" required>
+        <option value="">اختر المرحلة</option>
+        <option value="الاعدادي">الاعدادي</option>
+        <option value="الثانوي">الثانوي</option>
+      </select>
+      <br>
+      <label for="set_number">رقم الجلوس:</label>
+      <input type="text" id="set_number" required>
+      <br>
+      <label for="national_number">الرقم القومي:</label>
+      <input type="text" id="national_number" required>
+      <br>
+      <button type="submit">عرض النتائج</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
